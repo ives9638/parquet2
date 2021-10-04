@@ -22,6 +22,8 @@ pub trait Statistics: Send + Sync + std::fmt::Debug {
     fn as_any(&self) -> &dyn Any;
 
     fn physical_type(&self) -> &PhysicalType;
+
+    fn null_count(&self) -> Option<i64>;
 }
 
 impl PartialEq for &dyn Statistics {
@@ -106,7 +108,7 @@ pub fn deserialize_statistics(
         PhysicalType::Float => primitive::read::<f32>(statistics, descriptor),
         PhysicalType::Double => primitive::read::<f64>(statistics, descriptor),
         PhysicalType::ByteArray => binary::read(statistics, descriptor),
-        PhysicalType::FixedLenByteArray(size) => fixed_len_binary::read(statistics, *size),
+        PhysicalType::FixedLenByteArray(size) => fixed_len_binary::read(statistics, *size, descriptor),
     }
 }
 
