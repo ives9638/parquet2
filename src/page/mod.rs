@@ -20,8 +20,8 @@ use crate::statistics::{deserialize_statistics, Statistics};
 /// It holds actual data and thus cloning it is expensive.
 #[derive(Debug)]
 pub struct CompressedDataPage {
-    pub(crate) header: DataPageHeader,
-    pub(crate) buffer: Vec<u8>,
+    pub  header: DataPageHeader,
+    pub buffer: Vec<u8>,
     compression: Compression,
     uncompressed_page_size: usize,
     pub(crate) dictionary_page: Option<Arc<dyn DictPage>>,
