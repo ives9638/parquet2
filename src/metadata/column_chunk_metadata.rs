@@ -14,8 +14,8 @@ use crate::{compression::Compression, schema::types::Type};
 // access to the descriptor (e.g. physical, converted, logical).
 #[derive(Debug, Clone)]
 pub struct ColumnChunkMetaData {
-    column_chunk: ColumnChunk,
-    column_descr: ColumnDescriptor,
+    pub column_chunk: ColumnChunk,
+    pub column_descr: ColumnDescriptor,
 }
 
 /// Represents common operations for a column chunk.
