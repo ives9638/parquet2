@@ -49,7 +49,8 @@ pub fn decompress_buffer(
     if let Some(mut codec) = codec {
         // the buffer must be decompressed; do it so now, writing the decompressed data into `buffer`
         let compressed_buffer = &compressed_page.buffer;
-        buffer.resize(compressed_page.uncompressed_size(), 0);
+        //by lidn
+       // buffer.resize(compressed_page.uncompressed_size(), 0);
         match compressed_page.header() {
             DataPageHeader::V1(_) => decompress_v1(compressed_buffer, codec.as_mut(), buffer)?,
             DataPageHeader::V2(header) => {
