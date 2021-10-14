@@ -23,7 +23,7 @@ snap = { version = "^1.0", optional = true }
 brotli = { version = "^3.3", optional = true , feature=["simd"] }
 flate2 = { version = "^1.0", optional = true }
 lz4 = { version = "^1.23", optional = true }
-zstd = { version = "^0.9", optional = true }
+zstd = { version = "^0.9", optional = true , feature=["bindgen"]  }
 
 [features]
 default = ["snappy", "gzip", "lz4", "zstd", "brotli", "stream"]
