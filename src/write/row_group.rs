@@ -14,6 +14,7 @@ use super::{
     column_chunk::{write_column_chunk, write_column_chunk_async},
     DynIter, DynStreamingIterator,
 };
+use std::error::Error;
 
 fn same_elements<T: PartialEq + Copy>(arr: &[T]) -> Option<Option<T>> {
     if arr.is_empty() {
@@ -40,8 +41,7 @@ pub fn write_row_group<
 ) -> Result<(RowGroup, u64)>
 where
     W: Write,
-    ParquetError: From<E>,
-    E: std::error::Error,
+    E: Error + Send + Sync + 'static,
 {
     let column_iter = descriptors.iter().zip(columns);
 
@@ -49,7 +49,7 @@ where
     let columns = column_iter
         .map(|(descriptor, page_iter)| {
             let (column, size) =
-                write_column_chunk(writer, offset, descriptor, compression, page_iter?)?;
+                write_column_chunk(writer, offset, descriptor, compression, page_iter.map_err(ParquetError::from_external_error)?)?;
             offset += size;
             Ok(column)
         })
