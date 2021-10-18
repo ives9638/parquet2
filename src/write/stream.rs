@@ -4,6 +4,8 @@ use futures::stream::Stream;
 use futures::StreamExt;
 use futures::TryStreamExt;
 
+use std::{error::Error};
+
 use parquet_format_async_temp::FileMetaData;
 
 pub use crate::metadata::KeyValue;
@@ -26,8 +28,7 @@ pub async fn write_stream<'a, W, S, E>(
 where
     W: Write,
     S: Stream<Item = std::result::Result<RowGroupIter<'a, E>, E>>,
-    ParquetError: From<E>,
-    E: std::error::Error,
+    E: Error + Send + Sync + 'static,
 {
     let mut offset = start_file(writer)? as u64;
 
@@ -38,7 +39,7 @@ where
                 offset,
                 schema.columns(),
                 options.compression,
-                row_group?,
+                row_group.map_err(ParquetError::from_external_error)?,
             )?;
             offset += size;
             Result::Ok(group)
