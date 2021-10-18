@@ -22,7 +22,7 @@ impl<'a> Decoder<'a> {
 
 impl<'a> Iterator for Decoder<'a> {
     type Item = HybridEncoded<'a>;
-
+    #[inline]
     fn next(&mut self) -> Option<Self::Item> {
         if self.values.is_empty() {
             return None;

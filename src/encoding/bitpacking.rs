@@ -92,7 +92,7 @@ impl<'a> Decoder<'a> {
 
 impl<'a> Iterator for Decoder<'a> {
     type Item = u32;
-
+    #[inline]
     fn next(&mut self) -> Option<Self::Item> {
         if self.remaining == 0 {
             return None;
@@ -108,7 +108,7 @@ impl<'a> Iterator for Decoder<'a> {
         self.remaining -= 1;
         Some(result)
     }
-
+    #[inline]
     fn size_hint(&self) -> (usize, Option<usize>) {
         (self.remaining, Some(self.remaining))
     }

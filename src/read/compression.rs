@@ -53,8 +53,8 @@ pub fn decompress_buffer(
         let compressed_buffer = &compressed_page.buffer;
 
         // prepare the compression buffer
-        buffer.clear();
-        buffer.resize(compressed_page.uncompressed_size(), 0);
+      //  buffer.clear();
+       // buffer.resize(compressed_page.uncompressed_size(), 0);
         match compressed_page.header() {
             DataPageHeader::V1(_) => decompress_v1(compressed_buffer, codec.as_mut(), buffer)?,
             DataPageHeader::V2(header) => {

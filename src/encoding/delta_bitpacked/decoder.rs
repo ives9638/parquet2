@@ -66,7 +66,7 @@ impl<'a> Block<'a> {
 
 impl<'a> Iterator for Block<'a> {
     type Item = u32;
-
+    #[inline]
     fn next(&mut self) -> Option<Self::Item> {
         if self.remaining == 0 {
             return None;
@@ -161,7 +161,7 @@ impl<'a> Decoder<'a> {
 
 impl<'a> Iterator for Decoder<'a> {
     type Item = i32;
-
+    #[inline]
     fn next(&mut self) -> Option<Self::Item> {
         if self.total_count == 0 {
             return None;
@@ -187,7 +187,7 @@ impl<'a> Iterator for Decoder<'a> {
         self.first_value += delta;
         result
     }
-
+    #[inline]
     fn size_hint(&self) -> (usize, Option<usize>) {
         (self.total_count as usize, Some(self.total_count as usize))
     }
